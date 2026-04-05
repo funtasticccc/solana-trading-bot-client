@@ -53,6 +53,7 @@ export const ACTION_LABEL: Record<SignalAction, string> = {
   WAIT_HIGH: "WAIT ▲",
   WAIT_LOW:  "WAIT ▼",
   IGNORE:    "IGNORE",
+  DROPPED:   "DROPPED",
 };
 
 export const ACTION_COLOR: Record<SignalAction, string> = {
@@ -60,6 +61,7 @@ export const ACTION_COLOR: Record<SignalAction, string> = {
   WAIT_HIGH: "text-[#ff9500] border-[#ff9500]/25 bg-[#ff9500]/10",
   WAIT_LOW:  "text-[#3b82f6] border-[#3b82f6]/25 bg-[#3b82f6]/10",
   IGNORE:    "text-[#ff4455] border-[#ff4455]/25 bg-[#ff4455]/10",
+  DROPPED:   "text-[#6b7280] border-[#6b7280]/25 bg-[#6b7280]/10",
 };
 
 export const ACTION_BORDER: Record<SignalAction, string> = {
@@ -67,6 +69,7 @@ export const ACTION_BORDER: Record<SignalAction, string> = {
   WAIT_HIGH: "border-l-[#ffaa00]",
   WAIT_LOW:  "border-l-[#00b4ff]",
   IGNORE:    "border-l-[#ff4455]",
+  DROPPED:   "border-l-[#6b7280]",
 };
 
 export const ACTION_GLOW: Record<SignalAction, string> = {
@@ -74,6 +77,7 @@ export const ACTION_GLOW: Record<SignalAction, string> = {
   WAIT_HIGH: "shadow-[0_0_16px_rgba(255,170,0,0.10)]",
   WAIT_LOW:  "shadow-[0_0_16px_rgba(0,180,255,0.10)]",
   IGNORE:    "",
+  DROPPED:   "",
 };
 
 // ── Status helpers ────────────────────────────────────────────────────────────

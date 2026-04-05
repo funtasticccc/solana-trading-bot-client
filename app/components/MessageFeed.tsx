@@ -82,9 +82,8 @@ export const MessageFeed = () => {
   const groups   = groupMessages(messages);
 
   return (
-    <div style={{
+    <div className="w-full md:w-[300px] md:shrink-0" style={{
       display: "flex", flexDirection: "column", height: "100%",
-      width: "300px", flexShrink: 0,
       borderRightWidth: "1px", borderRightStyle: "solid", borderRightColor: "#21262d",
       backgroundColor: "#0d1117",
     }}>

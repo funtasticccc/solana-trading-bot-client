@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/app/lib/supabase";
 import type { Signal } from "@/app/lib/types";
 
@@ -41,6 +41,7 @@ const fromSignal = (s: Signal): LogEntry => {
 const MAX = 200;
 
 export const useLogs = () => {
+  const channelName = useRef(`logs-feed-${Math.random().toString(36).slice(2, 8)}`).current;
   const [logs, setLogs] = useState<LogEntry[]>([]);
 
   const push = useCallback((e: LogEntry) => {
@@ -58,7 +59,7 @@ export const useLogs = () => {
       });
 
     const channel = supabase
-      .channel("logs-feed")
+      .channel(channelName)
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "signals" }, (p) =>
         push(fromSignal(p.new as Signal))
       )

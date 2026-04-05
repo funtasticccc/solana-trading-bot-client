@@ -1,7 +1,7 @@
 export type ColoredTag = [label: string, color: string, severity?: number];
 
 export type SignalStatus = "SCANNING" | "ANALYZING" | "SCORED" | "ERROR" | "TIMEOUT";
-export type SignalAction = "BUY" | "WAIT_HIGH" | "WAIT_LOW" | "IGNORE";
+export type SignalAction = "BUY" | "WAIT_HIGH" | "WAIT_LOW" | "IGNORE" | "DROPPED";
 export type MarketRegime = "BULL" | "GROWTH" | "NEUTRAL" | "DYING";
 
 export interface ScoreBreakdown {
@@ -70,6 +70,30 @@ export interface Signal {
   action?: SignalAction | null;
   scored_at?: string | null;
   error?: string | null;
+  graduated_from?: string | null;
+  dropped_reason?: string | null;
+  dropped_at?: string | null;
+}
+
+// ── Wait queue row (from wait_queue table) ────────────────────────────────────
+export interface WaitQueueRow {
+  ca: string;
+  signal_id: string;
+  action: "WAIT_HIGH" | "WAIT_LOW";
+  initial_score: number;
+  confidence: number;
+  triggers_fired: string[];
+  pool_address: string | null;
+  added_at: string;
+  expires_at: string;
+  tick_count: number;
+  updated_at: string;
+  // joined from signals (populated by hook)
+  symbol?: string | null;
+  name?: string | null;
+  price?: number | null;
+  liquidity?: number | null;
+  volume1h?: number | null;
 }
 
 export interface IncomingMessage {

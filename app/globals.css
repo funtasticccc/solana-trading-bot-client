@@ -39,3 +39,11 @@ html, body {
 ::-webkit-scrollbar-thumb:hover { background: #484f58; }
 
 ::selection { background: rgba(0,255,136,0.15); color: #00ff88; }
+
+/* Mobile: lock dashboard to viewport, prevent cross-section scroll */
+@media (max-width: 767px) {
+  .dashboard-main {
+    overflow: hidden !important;
+    height: 100% !important;
+  }
+}

@@ -12,10 +12,11 @@ import { ActionBadge, StatusBadge } from "./StatusBadge";
 import type { Signal } from "@/app/lib/types";
 
 const ACCENT: Record<string, string> = {
-  BUY: "#00ff88",
-  WAIT_HIGH: "#ff9500",
+  BUY:      "#00ff88",
+  WAIT_HIGH:"#ff9500",
   WAIT_LOW: "#3b82f6",
-  IGNORE: "#ff4455",
+  IGNORE:   "#ff4455",
+  DROPPED:  "#6b7280",
 };
 
 const FALLBACK_ACCENT: Record<string, string> = {
@@ -214,6 +215,16 @@ export const SignalCard = ({
           />
         )}
       </div>
+
+      {/* DROPPED REASON */}
+      {signal.action === "DROPPED" && signal.dropped_reason && (
+        <div style={{ marginTop: 6, fontSize: 10, color: "#6b7280", fontFamily: "JetBrains Mono, monospace" }}>
+          ✕ {signal.dropped_reason.replace(/_/g, " ")}
+          {signal.dropped_at && (
+            <span style={{ marginLeft: 6, color: "#484f58" }}>{timeAgo(signal.dropped_at)} ago</span>
+          )}
+        </div>
+      )}
 
       {/* BODY */}
       {hasAnyData ? (

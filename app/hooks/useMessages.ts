@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/app/lib/supabase";
 import type { IncomingMessage } from "@/app/lib/types";
 
 export const useMessages = () => {
+  const channelName = useRef(`messages-feed-${Math.random().toString(36).slice(2, 8)}`).current;
   const [messages, setMessages] = useState<IncomingMessage[]>([]);
 
   const prepend = useCallback((msg: IncomingMessage) => {
@@ -22,7 +23,7 @@ export const useMessages = () => {
       });
 
     const channel = supabase
-      .channel("messages-feed")
+      .channel(channelName)
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, (p) =>
         prepend(p.new as IncomingMessage)
       )

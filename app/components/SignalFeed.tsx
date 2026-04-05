@@ -7,16 +7,17 @@ import { useSignals } from "@/app/hooks/useSignals";
 import { cn } from "@/app/lib/utils";
 import type { Signal, SignalAction } from "@/app/lib/types";
 
-const ACTIONS: Array<SignalAction | "ALL"> = ["ALL", "BUY", "WAIT_HIGH", "WAIT_LOW", "IGNORE"];
+const ACTIONS: Array<SignalAction | "ALL"> = ["ALL", "BUY", "WAIT_HIGH", "WAIT_LOW", "DROPPED", "IGNORE"];
 const LABEL: Record<SignalAction | "ALL", string> = {
-  ALL: "All", BUY: "Buy", WAIT_HIGH: "Wait ▲", WAIT_LOW: "Wait ▼", IGNORE: "Ignore",
+  ALL: "All", BUY: "Buy", WAIT_HIGH: "Wait ▲", WAIT_LOW: "Wait ▼", IGNORE: "Ignore", DROPPED: "Dropped",
 };
 const ACTIVE_STYLE: Record<SignalAction | "ALL", { color: string; bg: string; border: string }> = {
-  ALL:       { color: "#c9d1d9", bg: "#21262d", border: "#30363d" },
+  ALL:       { color: "#c9d1d9", bg: "#21262d",   border: "#30363d"   },
   BUY:       { color: "#00ff88", bg: "#00ff8812", border: "#00ff8830" },
   WAIT_HIGH: { color: "#ff9500", bg: "#ff950012", border: "#ff950030" },
   WAIT_LOW:  { color: "#3b82f6", bg: "#3b82f612", border: "#3b82f630" },
   IGNORE:    { color: "#ff4455", bg: "#ff445512", border: "#ff445530" },
+  DROPPED:   { color: "#6b7280", bg: "#6b728012", border: "#6b728030" },
 };
 
 export const SignalFeed = () => {
@@ -109,21 +110,26 @@ export const SignalFeed = () => {
         </div>
 
         {/* Filter bar */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: "6px",
-          padding: "12px 20px",
-          borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#161b22",
-          backgroundColor: "#0d1117",
-          flexShrink: 0,
-        }}>
+        <div
+          className="[&::-webkit-scrollbar]:hidden"
+          style={{
+            display: "flex", alignItems: "center", gap: "6px",
+            padding: "10px 16px",
+            borderBottomWidth: "1px", borderBottomStyle: "solid", borderBottomColor: "#161b22",
+            backgroundColor: "#0d1117",
+            flexShrink: 0,
+            overflowX: "auto",
+            scrollbarWidth: "none",
+          }}
+        >
           {ACTIONS.map((a) => {
             const count  = countFor(a);
             const active = filter === a;
             const s      = ACTIVE_STYLE[a];
             return (
               <button key={a} onClick={() => setFilter(a)} style={{
-                display: "flex", alignItems: "center", gap: "7px",
-                padding: "7px 16px", borderRadius: "8px",
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "6px 12px", borderRadius: "8px",
                 borderWidth: "1px", borderStyle: "solid",
                 borderColor: active ? s.border : "transparent",
                 backgroundColor: active ? s.bg : "transparent",
@@ -132,6 +138,7 @@ export const SignalFeed = () => {
                 letterSpacing: "0.06em",
                 cursor: "pointer", transition: "all 0.15s",
                 fontFamily: "Inter, sans-serif",
+                flexShrink: 0, whiteSpace: "nowrap",
               }}>
                 {LABEL[a]}
                 {count > 0 && (
@@ -186,7 +193,7 @@ export const SignalFeed = () => {
 
       {/* Detail panel */}
       <div className={cn(
-        "fixed inset-y-0 right-0 w-[560px] transition-transform duration-300 ease-in-out z-50 shadow-2xl",
+        "fixed inset-y-0 right-0 w-full md:w-[560px] transition-transform duration-300 ease-in-out z-50 shadow-2xl",
         panelOpen ? "translate-x-0" : "translate-x-full"
       )}>
         {selected && <SignalDetail signal={selected} onClose={closeDetail} />}

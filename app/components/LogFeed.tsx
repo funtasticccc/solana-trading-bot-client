@@ -26,9 +26,8 @@ const fmt = (iso: string) => {
 export const LogFeed = () => {
   const logs = useLogs();
   return (
-    <div style={{
+    <div className="w-full md:w-[340px] md:shrink-0" style={{
       display: "flex", flexDirection: "column", height: "100%",
-      width: "340px", flexShrink: 0,
       borderLeftWidth: "1px", borderLeftStyle: "solid", borderLeftColor: "#21262d",
       backgroundColor: "#0a0f16",
     }}>

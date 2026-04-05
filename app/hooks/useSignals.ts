@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/app/lib/supabase";
 import type { Signal } from "@/app/lib/types";
 
 export const useSignals = () => {
+  const channelName = useRef(`signals-feed-${Math.random().toString(36).slice(2, 8)}`).current;
   const [signals, setSignals] = useState<Signal[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +35,7 @@ export const useSignals = () => {
       });
 
     const channel = supabase
-      .channel("signals-feed")
+      .channel(channelName)
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "signals" }, (p) =>
         upsert(p.new as Signal)
       )
