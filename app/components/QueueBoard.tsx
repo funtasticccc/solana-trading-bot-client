@@ -313,11 +313,11 @@ export const QueueBoard = () => {
         </Column>
 
         {/* GRADUATED */}
-        <Column title="GRADUATED" accent="#00ff88" count={graduated.length} last>
+        {/* <Column title="GRADUATED" accent="#00ff88" count={graduated.length} last>
           {graduated.length === 0
             ? <Empty label="NONE YET" />
             : graduated.map((s) => <OutcomeRow key={s.id} sig={s} type="graduated" />)}
-        </Column>
+        </Column> */}
 
       </div>
     </div>
